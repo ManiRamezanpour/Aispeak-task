@@ -5,6 +5,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
+import { View, Image, StyleSheet } from "react-native";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -26,6 +27,17 @@ export default function RootLayout() {
     return null; // Prevent rendering until fonts are loaded.
   }
 
+  // Logo Header Component
+  const LogoHeader = () => (
+    <View style={styles.headerContainer}>
+      <Image
+        source={require("../assets/images/capybara.png")} // Update the path to your logo
+        style={styles.logo}
+        resizeMode="contain"
+      />
+    </View>
+  );
+
   return (
     <ThemeProvider value={DefaultTheme}>
       <AuthProvider>
@@ -33,15 +45,23 @@ export default function RootLayout() {
           <Stack.Screen
             name="login"
             options={{
-              title: "Login",
-              headerShown: true, // Adjust based on your design.
+              title: "",
+              headerTitle: () => <LogoHeader />, // Replace the title with the logo
+              headerStyle: {
+                backgroundColor: "#f8f9fa", // Optional: adjust background color
+              },
+              headerTitleAlign: "center", // Center the logo
             }}
           />
           <Stack.Screen
             name="register"
             options={{
-              title: "Register",
-              headerShown: true, // Adjust based on your design.
+              title: "",
+              headerTitle: () => <LogoHeader />,
+              headerStyle: {
+                backgroundColor: "#f8f9fa", // Optional: adjust background color
+              },
+              headerTitleAlign: "center",
             }}
           />
         </Stack>
@@ -50,3 +70,15 @@ export default function RootLayout() {
     </ThemeProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logo: {
+    width: 150, // Adjust width based on your logo's dimensions
+    height: 50, // Adjust height based on your logo's dimensions
+  },
+});

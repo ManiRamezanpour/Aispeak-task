@@ -8,14 +8,10 @@ const seconday = "#ffbb00"; // Aispeak Yellow
 
 export const Colors = {
   light: {
-    text: "#11181C", // Default dark text color
-    background: "#FFFFFF", // White background
-    tint: primary, // Aispeak Blue
-    icon: "#687076", // Light grayish icon color
-    tabIconDefault: "#687076", // Default tab icon color (light gray)
-    tabIconSelected: primary, // Selected tab icon color (Aispeak Blue)
-    primary: primary,
-    secondary: seconday,
+    aispeakBlue: primary,
+    aispeakYellow: seconday,
+    white: "#FFFFFF",
+    black: "#000000",
     error: "#FF0000",
   },
   dark: {

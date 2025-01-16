@@ -1,24 +1,20 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import InputField from "@/components/ui/InputFeild";
-import globalStyles from "@/styles/globalStyles";
-import { Colors } from "@/Constant/Colors";
+import { Colors } from "@/Constant/Colors"; // Assuming custom color palette
 import { useRouter } from "expo-router";
 import Button from "../ui/Button";
 import { useAuth } from "@/hooks/useAuth";
 
-interface RegisterFormProps {
-  onRegister: (username: string, email: string, password: string) => void;
-}
-
-const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister }) => {
+const RegisterForm: React.FC = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const router = useRouter(); // to change routes after functionality
-  const auth = useAuth(); // use auth hook to control user authentication
+  const router = useRouter();
+  const auth = useAuth();
+
   const handleSubmit = () => {
     if (!username || !email || !password) {
       setErrorMessage("All fields are required");
@@ -26,13 +22,15 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister }) => {
     }
     auth.register(email, username, password);
     setErrorMessage("");
-    onRegister(username, email, password);
   };
+
   const handleNavigateToLogin = () => {
     router.push("/login");
   };
+
   return (
-    <View>
+    <View style={styles.container}>
+      {/* Input Fields */}
       <InputField
         label="Username"
         placeholder="Enter your username"
@@ -52,19 +50,25 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      {errorMessage && (
-        <Text style={globalStyles.errorText}>{errorMessage}</Text>
-      )}
+
+      {/* Error Message */}
+      {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
+
+      {/* Register Button */}
       <Button
         title="Register"
         onPress={handleSubmit}
-        style={{ marginVertical: 10 }}
-        textStyle={{ fontSize: 18 }}
+        style={styles.button}
+        textStyle={styles.buttonText}
       />
-      <View style={globalStyles.switchContainer}>
-        <Text style={globalStyles.switchText}>Don't have an account?</Text>
+
+      {/* Switch to Login Screen */}
+      <View style={styles.switchContainer}>
+        <Text style={styles.switchText}>Already have an account?</Text>
         <TouchableOpacity onPress={handleNavigateToLogin}>
-          <Text style={[globalStyles.switchText, { color: Colors.light.tint }]}>
+          <Text
+            style={[styles.switchText, { color: Colors.light.aispeakBlue }]}
+          >
             Login
           </Text>
         </TouchableOpacity>
@@ -74,3 +78,40 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister }) => {
 };
 
 export default RegisterForm;
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 25, // Increased horizontal padding for better spacing
+    backgroundColor: "#fff", // White background for contrast
+    borderRadius: 12, // Slightly larger border-radius for a softer look
+    padding: 20, // More padding inside the form
+    elevation: 5, // Optional: Add shadow for better separation from the background
+  },
+  errorText: {
+    color: "#D9534F", // Red error text
+    fontSize: 16, // Increased font size for better visibility
+    marginBottom: 20, // Added margin to give space to the button
+    textAlign: "center", // Center-align error message
+  },
+  button: {
+    marginVertical: 12, // More space around the button
+    backgroundColor: Colors.light.aispeakBlue, // Blue background for the button
+    borderRadius: 8, // Slightly rounded corners
+    paddingVertical: 16, // Increased padding for a bigger button
+    alignItems: "center",
+  },
+  buttonText: {
+    fontSize: 18, // Larger font size for better readability
+    color: "#fff", // White text on the button
+    fontWeight: "600", // Semi-bold text for emphasis
+  },
+  switchContainer: {
+    marginTop: 20, // Added more space from the form fields
+    flexDirection: "row",
+    justifyContent: "center", // Centered the "Already have an account?" text
+  },
+  switchText: {
+    fontSize: 16,
+    color: "#666", // Lighter color for the switch text
+  },
+});

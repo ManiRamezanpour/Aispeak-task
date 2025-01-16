@@ -1,14 +1,23 @@
+import { Colors } from "@/Constant/Colors";
 import React from "react";
-import { TextInput, StyleSheet, View, Text } from "react-native";
-import globalStyles from "@/styles/globalStyles";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+} from "react-native";
 
 interface InputFieldProps {
-  label?: string;
+  label: string;
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
   secureTextEntry?: boolean;
-  errorMessage?: string;
+  containerStyle?: ViewStyle;
+  labelStyle?: TextStyle;
+  inputStyle?: TextStyle;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -17,35 +26,46 @@ const InputField: React.FC<InputFieldProps> = ({
   value,
   onChangeText,
   secureTextEntry = false,
-  errorMessage,
+  containerStyle,
+  labelStyle,
+  inputStyle,
 }) => {
   return (
-    <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
+    <View style={[styles.container, containerStyle]}>
+      {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
       <TextInput
-        style={globalStyles.input}
+        style={[styles.input, inputStyle]}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
         placeholderTextColor="#888"
       />
-      {errorMessage && (
-        <Text style={globalStyles.errorText}>{errorMessage}</Text>
-      )}
     </View>
   );
 };
 
+export default InputField;
+
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16,
+    width: "100%",
+    marginBottom: 20,
   },
   label: {
     fontSize: 16,
-    marginBottom: 4,
     color: "#333",
+    marginBottom: 5,
+    fontWeight: "600",
+  },
+  input: {
+    height: 45,
+    fontSize: 16,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+    backgroundColor: Colors.light.white,
+    color: "#333",
+    borderWidth: 1,
+    borderColor: "#ddd",
   },
 });
-
-export default InputField;

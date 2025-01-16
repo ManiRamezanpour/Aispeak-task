@@ -4,42 +4,48 @@ import { Colors } from "@/Constant/Colors"; // Assuming the colors are imported 
 const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    margin: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.light.aispeakBlue, // Background color
+    padding: 20,
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    marginBottom: 40,
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: Colors.light.secondary, // Aispeak Blue for title text
-    marginBottom: 16,
-    textAlign: "center",
+    fontSize: 32,
+    fontWeight: "700",
+    color: Colors.light.white, // Title color
+    marginBottom: 10,
   },
   subtitle: {
-    fontSize: 18,
-    color: Colors.light.text, // Dark text for subtitle
-    marginBottom: 8,
-    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "400",
+    color: Colors.light.white, // Subtitle color
+    marginBottom: 40,
   },
   button: {
-    backgroundColor: Colors.light.tint, // Aispeak Blue for button background
+    backgroundColor: Colors.light.aispeakBlue, // Aispeak Blue for button background
     padding: 12,
     borderRadius: 8,
     alignItems: "center",
     marginVertical: 8,
   },
   buttonText: {
-    color: Colors.light.background, // White text for button text
+    color: Colors.light.white, // White text for button text
     fontSize: 16,
     fontWeight: "bold",
   },
   input: {
     borderWidth: 1,
-    borderColor: Colors.light.text, // Dark text color for input border
+    borderColor: Colors.light.aispeakBlue, // Dark text color for input border
     borderRadius: 8,
     padding: 10,
     marginVertical: 8,
     fontSize: 16,
-    backgroundColor: Colors.light.background, // White background for input
+    backgroundColor: Colors.light.aispeakBlue, // White background for input
   },
   errorText: {
     color: Colors.light.error, // Aispeak Blue for error messages
@@ -55,13 +61,13 @@ const globalStyles = StyleSheet.create({
     backgroundColor: Colors.dark.background, // Dark background for dark mode
   },
   titleDark: {
-    color: Colors.dark.tint, // Aispeak Yellow for title text in dark mode
+    color: Colors.light.aispeakYellow, // Aispeak Yellow for title text in dark mode
   },
   subtitleDark: {
     color: Colors.dark.text, // Light gray text for subtitle in dark mode
   },
   buttonDark: {
-    backgroundColor: Colors.dark.tint, // Aispeak Yellow for button background in dark mode
+    backgroundColor: Colors.light.aispeakYellow, // Aispeak Yellow for button background in dark mode
   },
   buttonTextDark: {
     color: Colors.dark.background, // Dark background text for button in dark mode
@@ -69,7 +75,7 @@ const globalStyles = StyleSheet.create({
     fontWeight: "bold",
   },
   errorTextDark: {
-    color: Colors.dark.tint, // Aispeak Yellow for error messages in dark mode
+    color: Colors.light.aispeakYellow, // Aispeak Yellow for error messages in dark mode
   },
   switchContainer: {
     flexDirection: "row",
