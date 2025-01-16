@@ -5,10 +5,17 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
-import { View, Image, StyleSheet } from "react-native";
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  StyleSheet,
+} from "react-native";
 import { AuthProvider } from "@/contexts/AuthContext";
+import LogoHeader from "@/components/ui/LogoHeader";
+import { Colors } from "@/Constant/Colors";
+import React from "react";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -24,47 +31,56 @@ export default function RootLayout() {
   }, [loaded]);
 
   if (!loaded) {
-    return null; // Prevent rendering until fonts are loaded.
+    return null;
   }
-
-  // Logo Header Component
-  const LogoHeader = () => (
-    <View style={styles.headerContainer}>
-      <Image
-        source={require("../assets/images/capybara.png")} // Update the path to your logo
-        style={styles.logo}
-        resizeMode="contain"
-      />
-    </View>
-  );
 
   return (
     <ThemeProvider value={DefaultTheme}>
       <AuthProvider>
-        <Stack>
-          <Stack.Screen
-            name="login"
-            options={{
-              title: "",
-              headerTitle: () => <LogoHeader />, // Replace the title with the logo
-              headerStyle: {
-                backgroundColor: "#f8f9fa", // Optional: adjust background color
-              },
-              headerTitleAlign: "center", // Center the logo
-            }}
-          />
-          <Stack.Screen
-            name="register"
-            options={{
-              title: "",
-              headerTitle: () => <LogoHeader />,
-              headerStyle: {
-                backgroundColor: "#f8f9fa", // Optional: adjust background color
-              },
-              headerTitleAlign: "center",
-            }}
-          />
-        </Stack>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            keyboardShouldPersistTaps="handled"
+          >
+            <Stack initialRouteName="index">
+              <Stack.Screen
+                name="index"
+                options={{
+                  headerTitle: () => <LogoHeader />,
+
+                  navigationBarTranslucent: true,
+                  navigationBarColor: Colors.light.aispeakYellow,
+                  headerTitleAlign: "center",
+                }}
+              />
+              <Stack.Screen
+                name="login"
+                options={{
+                  headerTitle: () => <LogoHeader />,
+                  headerStyle: {
+                    backgroundColor: Colors.light.aispeakBlue,
+                  },
+                  navigationBarColor: Colors.light.aispeakYellow,
+                  navigationBarTranslucent: true,
+                  headerTitleAlign: "center",
+                }}
+              />
+              <Stack.Screen
+                name="register"
+                options={{
+                  headerTitle: () => <LogoHeader />,
+                  headerStyle: {
+                    backgroundColor: Colors.light.aispeakBlue,
+                  },
+                  headerTitleAlign: "center",
+                }}
+              />
+            </Stack>
+          </ScrollView>
+        </KeyboardAvoidingView>
         <StatusBar style="auto" />
       </AuthProvider>
     </ThemeProvider>
@@ -78,7 +94,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    width: 150, // Adjust width based on your logo's dimensions
-    height: 50, // Adjust height based on your logo's dimensions
+    width: 150,
+    height: 50,
   },
 });

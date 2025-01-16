@@ -10,7 +10,7 @@ export default function LoginScreen() {
       <Text style={styles.title}>Welcome Back!</Text>
       <Text style={styles.subtitle}>Login to your account</Text>
       {/* Form Section */}
-      <LoginForm onLogin={() => console.log("Logged In")} />s{" "}
+      <LoginForm onLogin={() => console.log("Logged In")} />
     </View>
   );
 }

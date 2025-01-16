@@ -82,6 +82,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
   const logout = () => {
     setUser(null);
+    router.push("/login");
   };
 
   return (
