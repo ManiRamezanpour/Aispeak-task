@@ -5,6 +5,7 @@ import globalStyles from "@/styles/globalStyles";
 import { Colors } from "@/Constant/Colors";
 import { useRouter } from "expo-router";
 import Button from "../ui/Button";
+import { useAuth } from "@/hooks/useAuth";
 
 interface RegisterFormProps {
   onRegister: (username: string, email: string, password: string) => void;
@@ -15,13 +16,15 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const router = useRouter();
+
+  const router = useRouter(); // to change routes after functionality
+  const auth = useAuth(); // use auth hook to control user authentication
   const handleSubmit = () => {
-    router.push("/welcome");
     if (!username || !email || !password) {
       setErrorMessage("All fields are required");
       return;
     }
+    auth.register(email, username, password);
     setErrorMessage("");
     onRegister(username, email, password);
   };

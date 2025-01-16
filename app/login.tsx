@@ -5,7 +5,7 @@ import { View, Text } from "react-native";
 export default function LoginScreen() {
   return (
     <View style={globalStyles.container}>
-      <Text>Login</Text>
+      <Text style={globalStyles.title}>Login</Text>
       <LoginForm onLogin={() => console.log("Fsdfds")} />
     </View>
   );

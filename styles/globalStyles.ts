@@ -10,7 +10,7 @@ const globalStyles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: Colors.light.tint, // Aispeak Blue for title text
+    color: Colors.light.secondary, // Aispeak Blue for title text
     marginBottom: 16,
     textAlign: "center",
   },
@@ -42,11 +42,12 @@ const globalStyles = StyleSheet.create({
     backgroundColor: Colors.light.background, // White background for input
   },
   errorText: {
-    color: Colors.light.tint, // Aispeak Blue for error messages
+    color: Colors.light.error, // Aispeak Blue for error messages
     fontSize: 14,
     marginTop: -5,
     marginBottom: 10,
-    textAlign: "center",
+    // textAlign: "center",
+    fontWeight: "semibold",
   },
 
   // Dark Mode Styles
@@ -78,7 +79,7 @@ const globalStyles = StyleSheet.create({
   },
   switchText: {
     fontSize: 16,
-    color: Colors.dark.text, // Light gray text in dark mode
+    color: Colors.dark.background, // Light gray text in dark mode
     marginLeft: 8,
   },
   image: {

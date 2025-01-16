@@ -1,24 +1,16 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
-import { Image } from "expo-image";
-
-import { useColorScheme } from "@/hooks/useColorScheme";
-import globalStyles from "@/styles/globalStyles";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -26,32 +18,35 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
+      router.push("/login");
     }
   }, [loaded]);
 
   if (!loaded) {
-    return null;
+    return null; // Prevent rendering until fonts are loaded.
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Image
-        style={globalStyles.image}
-        source="/assets/images/capybara.png"
-        placeholder="fsdf"
-        contentFit="cover"
-        transition={1000}
-      />
-      <Stack initialRouteName="login">
-        <Stack.Screen name="login" options={{ title: "Login" }} />
-        <Stack.Screen name="register" options={{ title: "Register" }} />
-      </Stack>
-      <StatusBar style="auto" />
+    <ThemeProvider value={DefaultTheme}>
+      <AuthProvider>
+        <Stack>
+          <Stack.Screen
+            name="login"
+            options={{
+              title: "Login",
+              headerShown: true, // Adjust based on your design.
+            }}
+          />
+          <Stack.Screen
+            name="register"
+            options={{
+              title: "Register",
+              headerShown: true, // Adjust based on your design.
+            }}
+          />
+        </Stack>
+        <StatusBar style="auto" />
+      </AuthProvider>
     </ThemeProvider>
   );
 }
-
-SplashScreen.setOptions({
-  duration: 1000,
-  fade: true,
-});

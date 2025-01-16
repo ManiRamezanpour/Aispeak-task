@@ -5,6 +5,7 @@ import globalStyles from "@/styles/globalStyles";
 import { Colors } from "@/Constant/Colors";
 import { useRouter } from "expo-router";
 import Button from "../ui/Button";
+import { useAuth } from "@/hooks/useAuth";
 
 interface LoginFormProps {
   onLogin: (identifier: string, password: string) => void;
@@ -15,14 +16,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const router = useRouter();
+  const router = useRouter(); // to change routes after functionality
+  const auth = useAuth(); // use auth hook to control user authentication
+
   const handleSubmit = () => {
-    router.push("/welcome");
     if (!identifier || !password) {
       setErrorMessage("Both fields are required");
       return;
     }
-    setErrorMessage("");
+    auth.login(identifier, password);
     onLogin(identifier, password);
   };
 
@@ -46,7 +48,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         secureTextEntry
       />
       {errorMessage && (
-        <Text style={[globalStyles.errorText, { color: Colors.light.tint }]}>
+        <Text style={[globalStyles.errorText, { color: Colors.light.error }]}>
           {errorMessage}
         </Text>
       )}
@@ -60,10 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         <Text style={globalStyles.switchText}>Don't have an account?</Text>
         <TouchableOpacity onPress={handleNavigateToRegister}>
           <Text
-            style={[
-              globalStyles.switchText,
-              { color: Colors.light.tabIconDefault },
-            ]}
+            style={[globalStyles.switchText, { color: Colors.light.secondary }]}
           >
             register
           </Text>
