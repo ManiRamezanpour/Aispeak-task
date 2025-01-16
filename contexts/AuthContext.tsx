@@ -60,15 +60,25 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     username: string,
     password: string
   ) => {
-    const newUser = {
-      id: Math.random() * 10,
-      email,
-      username,
-      password,
-    };
-    users.push(newUser);
-    setUser(newUser);
-    return router.push("/welcome");
+    try {
+      const newUser = {
+        id: Math.random() * 10,
+        email,
+        username,
+        password,
+      };
+      users.forEach((item: User) => {
+        if (item.username == username || item.email == email) {
+          throw new Error("User with this data is Exists !");
+        }
+      });
+      users.push(newUser);
+      setUser(newUser);
+      return router.push("/welcome");
+    } catch (error) {
+      console.error("Login error:", error);
+      throw new Error("login credentials are not valid");
+    }
   };
   const logout = () => {
     setUser(null);
